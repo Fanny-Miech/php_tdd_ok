@@ -49,17 +49,14 @@ class DonationFeeTest extends TestCase
 
     public function testExceptionWithCommissionPercentageEquals31()
     {
-
         $this->expectException('Exception');
-        
-        //Given      
-        $donationFees = new \App\Support\DonationFee(100, 31);
-        
-        //When
-
-        //Then
-        
-
     
+        $donationFees = new \App\Support\DonationFee(100, 31);
+    }
+
+    public function testExceptionDonationIsNull()
+    {
+        $this->expectException('Exception');
+        $donationFees = new \App\Support\DonationFee(0,10);
     }
 }

@@ -17,7 +17,12 @@ class DonationFee
             throw new Exception("Commission percentage invalid");
         }
         else $this->commissionPercentage = $commissionPercentage;
-        $this->donation = $donation;
+
+        if ($donation <= 0)
+        {
+            throw new Exception("Donation invalid");
+        }
+        else $this->donation = $donation;
         
     }
 
@@ -30,4 +35,6 @@ class DonationFee
     {
         return $this->donation-$this->getCommissionAmount();
     }
+
+
 }
