@@ -34,7 +34,7 @@ class DonationFee
 
     public function getAmountCollected()
     {
-        return $this->donation-$this->getCommissionAmount();
+        return $this->donation-$this->getFixedAndCommissionFeeAmount();
     }
 
     public function getFixedAndCommissionFeeAmount()
@@ -46,6 +46,17 @@ class DonationFee
         }
         return $total;
     }
+    
+    public function getSummary()
+    {
+        $summary=array();
+        $summary['dotation']=$this->donation;
+        $summary['fixedFee']=self::FIXED_FEE;
+        $summary['commission']=$this->getCommissionAmount();
+        $summary['fixedAndCommission']=$this->getFixedAndCommissionFeeAmount();
+        $summary['amountCollected']=$this->getAmountCollected();
 
+        return $summary;
+    }
 
 }
