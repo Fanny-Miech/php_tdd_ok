@@ -32,4 +32,31 @@ class DonationFeeTest extends TestCase
         $expected = 20;
         $this->assertEquals($expected, $actual);
     }
+
+    public function testAmountCollected()
+    {
+        //Given
+        $donationFees = new \App\Support\DonationFee(100, 10);
+
+        //When
+        $actual = $donationFees->getAmountCollected();
+
+        //Then
+        $expected = 90;
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testExceptionWithCommissionPercentageEquals31()
+    {
+        //Given
+        $donationFees = new \App\Support\DonationFee(100, 31);
+
+        //When
+
+
+        //Then
+        $this->expectException;
+
+    
+    }
 }
