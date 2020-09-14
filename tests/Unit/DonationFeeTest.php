@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use Exception;
 
 class DonationFeeTest extends TestCase
 {
@@ -48,14 +49,16 @@ class DonationFeeTest extends TestCase
 
     public function testExceptionWithCommissionPercentageEquals31()
     {
-        //Given
-        $donationFees = new \App\Support\DonationFee(100, 31);
 
+        $this->expectException('Exception');
+        
+        //Given      
+        $donationFees = new \App\Support\DonationFee(100, 31);
+        
         //When
 
-
         //Then
-        $this->expectException;
+        
 
     
     }
