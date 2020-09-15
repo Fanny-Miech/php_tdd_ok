@@ -19,11 +19,37 @@ class ProjectTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testProjectView()
+    public function testProjectContentsH1()
     {
         $response = $this->get('/project');
         $response->assertSee("<h1>Liste des projets</h1>", false);
     }
 
+    public function testProjectContentsTitleProject()
+    {
+        $response = $this->get('/project');
+        $response->assertSee("Title project", false);
+    }
 
+    public function testDetailsProjectContentsTitleProject()
+    {
+        $response = $this->get('/project/id');
+        $response->assertSee("Title project", false);
+    }
+
+    public function testRelationIfProjectHasUser()
+    {
+        //given
+
+        //then
+
+        //when
+
+    }
+
+    public function testDetailsProjectContentsAuthorProjectName()
+    {
+        $response = $this->get('/project/id');
+        $response->assertSee("Author project name", false);
+    }
 }

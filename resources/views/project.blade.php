@@ -8,5 +8,6 @@
 </head>
 <body>
     <h1>Liste des projets</h1>
+    <p>Title project</p>
 </body>
 </html>
