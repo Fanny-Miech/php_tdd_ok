@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\Support",
+    "\\tests",
+    "\\tests\\Unit"
+  ],
+  "SelectedNode": "\\tests\\Unit\\DonationFeeTest.php",
+  "PreviewInSolutionExplorer": false
+}
