@@ -19,7 +19,7 @@ class DonationFee
         }
         else $this->commissionPercentage = $commissionPercentage;
 
-        if ($donation <= 0)
+        if ($donation < 100)
         {
             throw new Exception("Donation invalid");
         }

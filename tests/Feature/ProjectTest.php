@@ -12,13 +12,18 @@ class ProjectTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testStatusIs200inGet_Project()
     {
         $response = $this->get('/project');
 
         $response->assertStatus(200);
     }
 
+    public function testProjectView()
+    {
+        $response = $this->get('/project');
+        $response->assertSee("<h1>Liste des projets</h1>", false);
+    }
 
 
 }
