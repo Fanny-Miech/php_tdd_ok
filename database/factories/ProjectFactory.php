@@ -23,7 +23,10 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=>$this->faker->name,
+            'description'=>$this->faker->paragraph(2),
+            'published_at'=>$this->faker->dateTime()->format('Y-m-d H:i:s'),
+            'author'=>$this->faker->unique()->name
         ];
     }
 }

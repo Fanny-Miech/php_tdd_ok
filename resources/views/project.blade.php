@@ -8,6 +8,10 @@
 </head>
 <body>
     <h1>Liste des projets</h1>
-    <p>Title project</p>
+    @foreach ($projects as $project)
+    <div>
+        <h2>{{$project->name}}</h2>
+    </div>
+    @endforeach
 </body>
 </html>

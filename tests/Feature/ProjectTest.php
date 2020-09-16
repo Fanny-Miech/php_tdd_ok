@@ -47,12 +47,23 @@ class ProjectTest extends TestCase
     public function testMyProjectIsInDatabase()
     {
         $project = Project::factory()
-        ->create();
-        //dump($project);
+        ->create([
+            'name' => 'My project'
+        ]);
         $this->assertDatabaseHas("projects", ['name' => 'My project']);
         //$this->assertEquals($project->name, 'My project');
     }
 
+    public function testDatabase()
+    {
+        Project::factory()
+        ->count(5)
+        ->create([
+            'name'=> 'My project'
+        ]);
+        $response = $this->get('/project');
+        $response->assertSee('My project', false);
+    }
 
     /*
     public function testProjectContentsTitleProject()
