@@ -4,9 +4,18 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use \App\Models\User;
+use \App\Models\Project;
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class ProjectTest extends TestCase
 {
+
+    use DatabaseMigrations;
+    
     /**
      * A basic test example.
      *
@@ -25,6 +34,27 @@ class ProjectTest extends TestCase
         $response->assertSee("<h1>Liste des projets</h1>", false);
     }
 
+    public function testFannyIsInDatabase()
+    {
+        $user = User::factory()
+        ->create([
+            'name' => 'fanny',
+        ]);
+        $this->assertDatabaseHas("users", ['name'=>'fanny']);
+        //$this->assertEquals($user->name, 'fanny');
+    }
+
+    public function testMyProjectIsInDatabase()
+    {
+        $project = Project::factory()
+        ->create();
+        //dump($project);
+        $this->assertDatabaseHas("projects", ['name' => 'My project']);
+        //$this->assertEquals($project->name, 'My project');
+    }
+
+
+    /*
     public function testProjectContentsTitleProject()
     {
         $response = $this->get('/project');
@@ -52,4 +82,6 @@ class ProjectTest extends TestCase
         $response = $this->get('/project/id');
         $response->assertSee("Author project name", false);
     }
+
+    */
 }
