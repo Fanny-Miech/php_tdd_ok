@@ -79,9 +79,6 @@ class ProjectTest extends TestCase
 
 
 
-
-
-
     public function testRelationBetweenProjectsAndUsers()
     {
         $userName ='SuperMan';
@@ -111,8 +108,18 @@ class ProjectTest extends TestCase
     }
 
 
-    // public function testProjectBelongsToUser()
-    // {
-    //     $this->assertBelongsTo('users', 'Project');
-    // }
+    public function testIfAuthorProjectIsOnDetailsProjectView()
+    {
+        $userName = 'SuperCarotte';
+        User::factory()
+        ->has(Project::factory())
+        ->create([
+            'name'=> $userName
+        ]);
+
+        $response = $this->get('/project/1');
+        $response->assertSee($userName, false);
+    }
+
+
 }
