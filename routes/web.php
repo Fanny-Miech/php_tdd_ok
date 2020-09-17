@@ -23,3 +23,4 @@ Route::get('/', function () {
 // });
 
 Route::get('/project',  [\App\Http\Controllers\ProjectController::class, 'index']);
+Route::get('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);

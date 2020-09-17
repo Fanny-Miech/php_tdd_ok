@@ -66,23 +66,23 @@ class ProjectTest extends TestCase
     }
 
 
-    /*
+  
     public function testIfProjectNameIsOnProjectDetailsView()
     {
         Project::factory()
         ->create([
             'name'=> 'My project'
         ]);
-        $response = $this->get('/project/{id}');
+        $response = $this->get('/project/1');
         $response->assertSee('My project', false);
     }
 
-*/
 
 
 
 
-    public function testRelationIfProjectHasUser()
+
+    public function testRelationBetweenProjectsAndUsers()
     {
         $userName ='SuperMan';
         $projectName = 'SuperProject';
@@ -93,14 +93,12 @@ class ProjectTest extends TestCase
                 'name' => $projectName
             ]))
             ->create();
-        dump($user);
 
         $project = Project::factory()
             ->for(User::factory()->state([
                 'name' => $userName
             ]))
         ->create();
-        dump($project);
 
         //when
         $actualProjectUserName = $project->user->name;

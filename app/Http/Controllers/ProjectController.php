@@ -18,7 +18,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-     return view('project', ['projects'=>Project::all()]);
+     return view('projects', ['projects'=>Project::all()]);
     }
 
     /**
@@ -50,7 +50,8 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        return view('project', ['project'=> $project]);
     }
 
     /**

@@ -7,13 +7,12 @@
     <title>project</title>
 </head>
 <body>
-    <h1>Détail du projet</h1>
-
+    <h1>Liste des projets</h1>
+    @foreach ($projects as $project)
     <div>
         <h2>{{$project->name}}</h2>
         <p>{{$project->description}}</p>
-        <h3>{{$project->user->name}}</h3>
     </div>
-
+    @endforeach
 </body>
 </html>
