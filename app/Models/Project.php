@@ -9,4 +9,14 @@ class Project extends Model
     use HasFactory;
 
     public $timestamps = false;
+    
+    protected $fillable = [
+       'name', 'description', 'published_at', 'author' 
+    ];
+
+
+    public function user() {
+        return $this->belongsTo('App\Models\User', 'author');
+    }
+    
 }

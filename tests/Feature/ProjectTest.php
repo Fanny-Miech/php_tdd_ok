@@ -54,7 +54,7 @@ class ProjectTest extends TestCase
         //$this->assertEquals($project->name, 'My project');
     }
 
-    public function testDatabase()
+    public function testIfProjectNameIsOnProjectView()
     {
         Project::factory()
         ->count(5)
@@ -65,34 +65,56 @@ class ProjectTest extends TestCase
         $response->assertSee('My project', false);
     }
 
+
     /*
-    public function testProjectContentsTitleProject()
+    public function testIfProjectNameIsOnProjectDetailsView()
     {
-        $response = $this->get('/project');
-        $response->assertSee("Title project", false);
+        Project::factory()
+        ->create([
+            'name'=> 'My project'
+        ]);
+        $response = $this->get('/project/{id}');
+        $response->assertSee('My project', false);
     }
 
-    public function testDetailsProjectContentsTitleProject()
-    {
-        $response = $this->get('/project/id');
-        $response->assertSee("Title project", false);
-    }
+*/
+
+
+
 
     public function testRelationIfProjectHasUser()
     {
-        //given
+        $userName ='SuperMan';
+        $projectName = 'SuperProject';
 
-        //then
+        //given
+        $user = User::factory()
+            ->has(Project::factory()->state([
+                'name' => $projectName
+            ]))
+            ->create();
+        dump($user);
+
+        $project = Project::factory()
+            ->for(User::factory()->state([
+                'name' => $userName
+            ]))
+        ->create();
+        dump($project);
 
         //when
+        $actualProjectUserName = $project->user->name;
+        $actualUserProjectName = $user->projects()->first()->name;
+        
+        //then
+        $this->assertEquals($userName, $actualProjectUserName);
+        $this->assertEquals($projectName, $actualUserProjectName);
 
     }
 
-    public function testDetailsProjectContentsAuthorProjectName()
-    {
-        $response = $this->get('/project/id');
-        $response->assertSee("Author project name", false);
-    }
 
-    */
+    // public function testProjectBelongsToUser()
+    // {
+    //     $this->assertBelongsTo('users', 'Project');
+    // }
 }
