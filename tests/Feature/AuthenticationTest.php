@@ -32,6 +32,16 @@ class AuthenticationTest extends TestCase
         $this->assertDatabaseHas('projects', ['name'=> $testNameForm]);
     }
 
+    public function testUnauthenticatedUserCannotCreateANewProject()
+    {
+        $testNameForm = 'PostMan';
+        $testDescrForm = 'PostDescription';
+        $this->expectException(\Illuminate\Auth\AuthenticationException::class);
+        $response = $this->post('/project', ['name'=> $testNameForm, 'description'=> $testDescrForm]);
+    }
+
+
+
     public function testUnauthenticatedUserCannotShowDashboard()
     {
         $this->expectException(\Illuminate\Auth\AuthenticationException::class);
