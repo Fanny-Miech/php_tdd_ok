@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -50,7 +51,7 @@ class ProjectController extends Controller
             'name'=>$request->name,
             'description'=>$request->description,
             'published_at'=>now(),
-            'author'=>1
+            'author'=>Auth::id()
         ]);
         return redirect('/project');
     }
