@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\User;
 
 class ProjectController extends Controller
 {
@@ -28,7 +29,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+       return view('add-project', ['projects'=>Project::all()]);
     }
 
     /**
@@ -39,7 +40,19 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate ([
+            'name'=>'required | string | max:70',
+            'description'=>'required | alpha_dash',
+            'published_at'=>'date'
+        ]);
+
+        Project::create([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'published_at'=>now(),
+            'author'=>1
+        ]);
+        return redirect('/project');
     }
 
     /**
@@ -62,7 +75,9 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project=Project::findOrFail($id);
+        $project_u=User::all();
+        return view('editProject', ['project'=>$project, 'project_u'=>$project_u]);
     }
 
     /**
@@ -74,7 +89,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=> 'required | string | max:70',
+            'description'=>'required'
+        ]);
+        Project::findOrFail($id)->update($request->all());
+        return redirect('/project');
     }
 
     /**
@@ -85,6 +105,7 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project_id=Project::where('id',$id)->delete();
+        return redirect('/project');
     }
 }

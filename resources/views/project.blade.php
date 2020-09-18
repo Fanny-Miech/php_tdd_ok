@@ -13,6 +13,15 @@
         <h2>{{$project->name}}</h2>
         <p>{{$project->description}}</p>
         <h3>{{$project->user->name}}</h3>
+        @auth
+            <a href="/ptoject/{{$project->id}}/modifier">Editer</a>
+            <form action="/project/{{$project->id}}" method="post">
+                @csrf
+                @method('delete')
+                <button type="input">Supprimer</button>
+            </form>
+        @endauth
+        
     </div>
 
 </body>

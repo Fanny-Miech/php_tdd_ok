@@ -122,4 +122,18 @@ class ProjectTest extends TestCase
     }
 
 
+    public function testNewProjectRegister()
+    {
+        //given
+        $testUser = User::factory()->create();
+        $testNameForm = 'PostMan';
+        $testDescrForm = 'PostDescription';
+
+        //when
+        $response=$this->post('/project', ['name'=> $testNameForm, 'description'=> $testDescrForm]);
+
+        //then
+        $this->assertDatabaseHas('projects', ['name'=> $testNameForm]);
+    }
+
 }
