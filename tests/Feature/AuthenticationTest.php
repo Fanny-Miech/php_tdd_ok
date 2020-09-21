@@ -53,4 +53,12 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/dashboard')->assertStatus(200);
     }
+
+
+
+    public function testUnauthenticatedUserCannotShowTheFormToCreateANewProject()
+    {
+        $this->expectException(\Illuminate\Auth\Access\AuthorizationException::class);
+        $response = $this->get('/project/create');
+    }
 }

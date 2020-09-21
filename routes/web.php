@@ -24,8 +24,8 @@ Route::get('/', function () {
 
 Route::get('/project',  [\App\Http\Controllers\ProjectController::class, 'index']);
 Route::get('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
-Route::get('/project/create', [\App\Http\Controllers\ProjectController::class, 'create']);
-// Route::middleware(['auth:sanctum', 'verified'])->get('/project/create', [\App\Http\Controllers\ProjectController::class, 'create']);
+
+Route::get('/project/create', [\App\Http\Controllers\ProjectController::class, 'create'])->middleware('auth');
 Route::middleware(['auth:sanctum', 'verified'])->post('/project', [\App\Http\Controllers\ProjectController::class, 'store']);
 Route::middleware(['auth:sanctum', 'verified'])->get('/project/{id}/edit', [\App\Http\Controllers\ProjectController::class, 'edit']);
 Route::middleware(['auth:sanctum', 'verified'])->put('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'update']);

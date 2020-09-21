@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
 use App\Models\Project;
@@ -11,6 +12,12 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
     use DatabaseMigrations;
+
+
+    public function __construct()
+    {
+        $this->authorizeResource(Project::class, 'project');
+    }
 
 
     /**
@@ -30,7 +37,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-       return view('add-project', ['projects'=>Project::all()]);
+        if (Auth::check()){
+            $this->authorize('create', Project::class);
+            return view('add-project');
+        }
+       else return redirect('/dashboard');
     }
 
     /**
@@ -76,9 +87,12 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $project=Project::findOrFail($id);
-        $project_u=User::all();
-        return view('editProject', ['project'=>$project, 'project_u'=>$project_u]);
+        if (Auth::check()){
+            $project=Project::findOrFail($id);
+            $project_u=User::all();
+            return view('editProject', ['project'=>$project, 'project_u'=>$project_u]);
+        }
+        else redirect('/dashboard');
     }
 
     /**
@@ -90,12 +104,15 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name'=> 'required | string | max:70',
-            'description'=>'required'
-        ]);
-        Project::findOrFail($id)->update($request->all());
-        return redirect('/project');
+        if (Auth::check()){
+            $request->validate([
+                'name'=> 'required | string | max:70',
+                'description'=>'required'
+            ]);
+            Project::findOrFail($id)->update($request->all());
+            return redirect('/project');
+        }
+        else redirect('/dashboard');
     }
 
     /**
@@ -106,7 +123,10 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        $project_id=Project::where('id',$id)->delete();
-        return redirect('/project');
+        if (Auth::check()){
+            $project_id=Project::where('id',$id)->delete();
+            return redirect('/project');
+        }
+        else redirect('/dashboard');
     }
 }

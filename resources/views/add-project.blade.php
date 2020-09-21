@@ -8,8 +8,6 @@
 </head>
 <body>
 
-    @section('content')
-
     <h1>Ajouter un projet</h1>
 
     <div class="container">
@@ -33,8 +31,6 @@
         </form>
 
     </div>
-
-    @endsection
 
 </body>
 </html>
