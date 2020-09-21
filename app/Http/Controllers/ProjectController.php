@@ -8,16 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
     use DatabaseMigrations;
 
-
-    public function __construct()
-    {
-        $this->authorizeResource(Project::class, 'project');
-    }
 
 
     /**
@@ -37,11 +33,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        if (Auth::check()){
-            $this->authorize('create', Project::class);
+       // if (Auth::check()){
+           // $this->authorize('create', Project::class);
             return view('add-project');
-        }
-       else return redirect('/dashboard');
+    //     }
+    //    else return redirect('/dashboard');
     }
 
     /**
@@ -89,6 +85,8 @@ class ProjectController extends Controller
     {
         if (Auth::check()){
             $project=Project::findOrFail($id);
+            //dd($project);
+            Gate::authorize('update-project', $project);
             $project_u=User::all();
             return view('editProject', ['project'=>$project, 'project_u'=>$project_u]);
         }

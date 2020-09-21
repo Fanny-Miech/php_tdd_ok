@@ -14,6 +14,9 @@ class Project extends Model
        'name', 'description', 'published_at', 'author' 
     ];
 
+    protected $casts = [
+        'author' => 'integer'
+    ];
 
     public function user() {
         return $this->belongsTo('App\Models\User', 'author');
