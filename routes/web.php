@@ -23,13 +23,14 @@ Route::get('/', function () {
 // });
 
 Route::get('/project',  [\App\Http\Controllers\ProjectController::class, 'index']);
-Route::get('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
+//
 
 Route::get('/project/create', [\App\Http\Controllers\ProjectController::class, 'create'])->middleware('auth');
-Route::middleware(['auth:sanctum', 'verified'])->post('/project', [\App\Http\Controllers\ProjectController::class, 'store']);
-Route::middleware(['auth:sanctum', 'verified'])->get('/project/{id}/edit', [\App\Http\Controllers\ProjectController::class, 'edit']);
-Route::middleware(['auth:sanctum', 'verified'])->put('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'update']);
-Route::middleware(['auth:sanctum', 'verified'])->delete('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy']);
+Route::get('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
+Route::post('/project', [\App\Http\Controllers\ProjectController::class, 'store'])->middleware('auth');
+Route::get('/project/{id}/edit', [\App\Http\Controllers\ProjectController::class, 'edit'])->middleware('auth');
+Route::put('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'update'])->middleware('auth');
+Route::delete('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy'])->middleware('auth');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
