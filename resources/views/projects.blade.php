@@ -9,12 +9,13 @@
 <body>
     <h1>Liste des projets</h1>
     @foreach ($projects as $project)
-    <a href="/project/{{$project->id}}">
     <div>
-        <h2>{{$project->title}}</h2>
+        <a href="/project/{{$project->id}}">
+            <h2>{{$project->title}}</h2>
+        </a>
         <p>{{$project->description}}</p>
+        <br/>
     </div>
-    </a>
     @endforeach
 </body>
 </html>

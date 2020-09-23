@@ -75,6 +75,12 @@ class ProjectController extends Controller
         return view('project', ['project'=> $project]);
     }
 
+
+    public function showDonation($id)
+    {
+        $project = Project::findOrFail($id);
+        return view('donation', ['project'=> $project]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
