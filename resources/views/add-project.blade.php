@@ -16,17 +16,17 @@
         <form action='/project' method="post">
             @csrf
             <div class="form-group">
-                <label for="inputName">Nom du projet</label>
-                <input type="text" class="form-control" id="inputName" name="name">
+                <label for="inputName">Titre du projet</label>
+                <input type="text" class="form-control" id="inputName" name="title">
             </div>
+            <br/>
     
             <div class="form-group">
                 <label for="inputDescription">Description du projet</label>
-                <textarea type="description" id="inputDescription" name="description">
-                Description ici !
-                </textarea>
+                <textarea type="description" id="inputDescription" name="description"></textarea>
             </div>
        
+        <br/>
             <button type="submit" value="Register" class="btn btn-primary">Ajouter le projet</button>
         </form>
 

@@ -10,11 +10,12 @@
     <h1>Détail du projet</h1>
 
     <div>
-        <h2>{{$project->name}}</h2>
+        <h2>{{$project->title}}</h2>
         <p>{{$project->description}}</p>
         <h3>{{$project->user->name}}</h3>
         @auth
-            <a href="/ptoject/{{$project->id}}/modifier">Editer</a>
+            <a href="/project/{{$project->id}}/edit">Editer</a>
+            <br/>
             <form action="/project/{{$project->id}}" method="post">
                 @csrf
                 @method('delete')

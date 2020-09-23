@@ -15,7 +15,7 @@ class CreateProjectTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
             $table->longText('description');
             $table->date('published_at')->nullable;
             $table->bigInteger('author')->unsigned();

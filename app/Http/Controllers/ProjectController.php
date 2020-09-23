@@ -49,13 +49,13 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate ([
-            'name'=>'required | string | max:70',
-            'description'=>'required | alpha_dash',
+            'title'=>'required | string | max:70',
+            'description'=>'required | string | max:255',
             'published_at'=>'date'
         ]);
 
         Project::create([
-            'name'=>$request->name,
+            'title'=>$request->title,
             'description'=>$request->description,
             'published_at'=>now(),
             'author'=>Auth::id()
@@ -85,10 +85,8 @@ class ProjectController extends Controller
     {
         if (Auth::check()){
             $project=Project::findOrFail($id);
-            //dd($project);
             Gate::authorize('update-project', $project);
-            $project_u=User::all();
-            return view('editProject', ['project'=>$project, 'project_u'=>$project_u]);
+            return view('editProject', ['project'=>$project]);
         }
         else redirect('/dashboard');
     }
@@ -103,11 +101,18 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         if (Auth::check()){
+            
             $request->validate([
-                'name'=> 'required | string | max:70',
+                'title'=> 'required | string | max:70',
                 'description'=>'required'
             ]);
-            Project::findOrFail($id)->update($request->all());
+            $project=Project::findOrFail($id)->update([
+                'title'=>$request->title,
+                'description'=>$request->description,
+                'published_at'=>now(),
+                'author'=>Auth::id()
+            ]);
+            //Gate::authorize('update-project', $project);
             return redirect('/project');
         }
         else redirect('/dashboard');

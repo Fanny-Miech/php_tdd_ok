@@ -4,26 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-class Project extends Model
+
+class Donation extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
     
     protected $fillable = [
-       'title', 'description', 'published_at', 'author' 
+       'user_id', 'project_id', 'amount' 
     ];
 
     protected $casts = [
-        'author' => 'integer'
+        'user_id' => 'integer',
+        'project_id' => 'integer'
     ];
 
     public function user() {
-        return $this->belongsTo('App\Models\User', 'author');
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function project() {
+        return $this->belongsTo('App\Models\Project');
     }
     
-    public function donations()
-    {
-        return $this->hasMany('App\Models\Donation');
-    }
 }

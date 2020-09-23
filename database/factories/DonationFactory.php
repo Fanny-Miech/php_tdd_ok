@@ -2,21 +2,21 @@
 
 namespace Database\Factories;
 
-use App\Models\Project;
-use App\Models\User;
-use Faker\Provider\Uuid;
+use App\Models\Donation;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 use Illuminate\Support\Str;
 
-class ProjectFactory extends Factory
+use App\Models\Project;
+use App\Models\User;
+
+class DonationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Project::class;
+    protected $model = Donation::class;
 
     /**
      * Define the model's default state.
@@ -26,10 +26,9 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-            'title'=> $this->faker->title(),
-            'description'=> $this->faker->paragraph(2),
-            'published_at'=> now(),
-            'author'=> User::factory()
+            'user_id'=>User::factory(),
+            'project_id'=>Project::factory(),
+            'amount'=>$this->faker->randomDigitNotNull
         ];
     }
 }

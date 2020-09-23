@@ -30,7 +30,6 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('update-project', function ($user, $project){
-            dd($user->id, $project->author,$user->id == $project->author);
             return $user->id == $project->author;
         });
     }

@@ -8,28 +8,29 @@
 </head>
 <body>
 
-    <h1>Ajouter un projet</h1>
+    <h1>Modifier le projet</h1>
 
     <div class="container">
-
-        {{-- question sur la route ?? --}}
-        <form action='/project' method="post">
+        <form action="/project/{{$project->id}}" method="post">
             @csrf
+            
+            @method('put')
+    
+    
             <div class="form-group">
-                <label for="inputName">Nom du projet</label>
-                <input type="text" class="form-control" id="inputName" name="name">
+                <label for="inputName">Titre du projet</label>
+                <input type="text" class="form-control" id="inputName" name="title" value="{{$project->title}}">
             </div>
     
             <div class="form-group">
                 <label for="inputDescription">Description du projet</label>
-                <textarea type="description" id="inputDescription" name="description">
-                Description ici !
-                </textarea>
+                <textarea name="description" id="inputDescription" cols="30" rows="10" name="description" >{{$project->description}}</textarea>
             </div>
-       
-            <button type="submit" value="Register" class="btn btn-primary">Ajouter le projet</button>
+    
+            <button type="submit" class="btn btn-primary">Modifier le projet</button>
         </form>
-
+    
+    
     </div>
 
 </body>
