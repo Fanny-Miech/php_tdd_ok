@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
+
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Donation;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\DonationShipped;
+use App\Mail\DonationShippedAuthor;
 
 class ProjectController extends Controller
 {
@@ -137,5 +144,34 @@ class ProjectController extends Controller
             return redirect('/project');
         }
         else redirect('/dashboard');
+    }
+
+
+
+
+    public function sendMails(Request $request, int $id)
+    {
+        $request -> validate([
+            'donation_id' => 'required | integer',
+        ]);
+
+        $project = Project::findOrFail($id);
+        $projectOwner = User::findOrFail($project->user_id);
+
+        
+        $donation = Donation::create([
+            'project_id'=> $project->id,
+            'user_id'=> Auth::id(),
+            'amount'=> $request->amount
+            ]);
+
+        //Send a mail to the donator
+        Mail::to(Auth::user()->email)->send(new DonationShipped($donation));
+
+        //Send a mail to the project owner
+        Mail::to($projectOwner->email)->send(new DonationShippedAuthor($donation));
+
+        return view('paiement');    
+
     }
 }

@@ -31,11 +31,11 @@ Route::get('/project/{id}/edit', [\App\Http\Controllers\ProjectController::class
 Route::put('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'update'])->middleware('auth');
 Route::delete('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'destroy'])->middleware('auth');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
 Route::get('/project/{id}/donation', [\App\Http\Controllers\ProjectController::class, 'showDonation']);
 Route::post('/project/{id}/donation', [\App\Http\Controllers\DonationController::class, 'store'])->middleware('auth');
 
 Route::get('/project/{id}', [\App\Http\Controllers\ProjectController::class, 'show']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

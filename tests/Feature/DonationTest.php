@@ -26,7 +26,7 @@ class DonationTest extends TestCase
         $project = Project::factory()->create();
 
         //when
-        $response=$this->actingAs($project->user)->post('/project/'.$project->id.'/donation', ['amount'=> '10', 'project_id'=> $project->id]);
+        $response=$this->actingAs($project->user)->post('/project/'.$project->id.'/donation', ['amount'=> '10', 'project_id'=> $project->id])->assertStatus(302);
 
         //then
         $this->assertDatabaseHas('donations', ['amount'=> '10', 'user_id'=>$project->author, 'project_id'=>$project->id]);

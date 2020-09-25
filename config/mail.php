@@ -43,6 +43,8 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'auth_mode' => null,
+            'from' => ['adress' => 'jeanmichel.fedetest@tdd.com', 'name' => 'Jean-Michel FedetestTDD'],
+            'reply_to' => ['adress' => 'jeanmichel.fedetest@tdd.com', 'name' => 'Jean-Michel FedetestTDD']
         ],
 
         'ses' => [

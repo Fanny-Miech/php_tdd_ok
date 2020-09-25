@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Mail\Mailable;
+
+use App\Mail\DonationShipped;
+use App\Mail\DonationShippedAuthor;
 
 class DonationController extends Controller
 {
@@ -44,12 +49,22 @@ class DonationController extends Controller
         ]);
 
         if (Auth::check()){
-            Donation::create([
+            $donation = Donation::create([
                 'amount'=>$request->amount,
                 'project_id'=>$request->project_id,
                 'user_id'=>Auth::id()
             ]);
+
+
+            //Send a mail to the donator
+            Mail::to(Auth::user()->email)->send(new DonationShipped($donation));
+
+            //Send a mail to the project owner
+            $projectOwner = $donation->project->user;
+            Mail::to($projectOwner->email)->send(new DonationShippedAuthor($donation));
+
             return redirect("/project/{$request->project_id}/donation");
+            //return view('validateDonation', ['donation'=>$donation]);
         }
         else return redirect('/dashboard');
     }
@@ -98,4 +113,21 @@ class DonationController extends Controller
     {
         //
     }
+
+
+    // public function ship(Request $request, $donationId)
+    // {
+    //     $donation = Donation::findOrFail($donationId);
+
+    //     //ship order
+
+    //     Mail::to($request->user())->send(new DonationShipped($donation));
+    // }
+
+    // public function ship($donationId)
+    // {
+    //     $donation = Donation::findOrFail($donationId);
+
+    //     event(new DonationShipped($donation));
+    // }
 }
