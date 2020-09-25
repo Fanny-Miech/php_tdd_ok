@@ -25,16 +25,22 @@ class EmailTest extends TestCase
         $testAmount = '10';
         Mail::fake();
 
+        // $donation = Donation::factory()->create([
+        //     'project_id'=>$project->id
+        // ]);
+
         //when
         $this->actingAs($project->user)->post('/project/'.$project->id.'/donation', ['amount'=> $testAmount, 'project_id'=> $project->id]);
 
-        //dump($project->donation->last()->id);
+        dump($project->donations->last()->id);
+
         //then
         Mail::assertSent(function (DonationShipped $mail) use ($project) {
-            return $mail->donation->project->id === $project->id;
+            dump($mail->donation->id);
+            return $mail->donation->id === $project->donations->last()->id;
         });
         Mail::assertSent(function (DonationShippedAuthor $mail) use ($project) {
-            return $mail->donation->project->id === $project->id;
+            return $mail->donation->id === $project->donations->last()->id;
         });
     }
 }
