@@ -38,7 +38,8 @@ class DonationShippedAuthor extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.donations.shipped.author')
+        return $this->from('jeanMichel.fedetest@tdd.com')
+                    ->view('emailsDonationsShippedAuthor')
                     ->with([
                         'projectTitle' => $this->project->title,
                         'donationAmount' => $this->donation->amount,
